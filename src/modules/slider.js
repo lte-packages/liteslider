@@ -72,12 +72,15 @@ const slider = function ({
    */
   const refresh = function (sliderId) {
     const instance = instancesMap.get(sliderId)
-    if (instance && typeof instance.refresh === 'function') {
-      instance.refresh()
+    if (!instance) {
+      console.warn(`Slider with ID "${sliderId}" not found.`)
+      return
     }
-    else {
-      console.warn(`Slider with ID "${sliderId}" not found or does not support refresh.`)
+    if (typeof instance.refresh !== 'function') {
+      console.warn(`Slider with ID "${sliderId}" does not support refresh.`)
+      return
     }
+    instance.refresh()
   }
 
   return { refresh }
