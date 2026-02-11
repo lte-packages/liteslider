@@ -22,14 +22,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikeh74/liteslider.git"
+    "url": "git+https://github.com/foxshack/liteslider.git"
   },
   "author": "mikeh74",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mikeh74/liteslider/issues"
+    "url": "https://github.com/foxshack/liteslider/issues"
   },
-  "homepage": "https://github.com/mikeh74/liteslider#readme",
+  "homepage": "https://github.com/foxshack/liteslider#readme",
   "devDependencies": {
     "@eslint/js": "^9.20.0",
     "@parcel/transformer-sass": "^2.13.3",

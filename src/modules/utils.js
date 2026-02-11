@@ -5,13 +5,13 @@
  * @return {Object}
  */
 const getResponsiveOptions = (responsive) => {
-  const viewportWidth = window.visualViewport.width;
+  const viewportWidth = window.visualViewport.width
   let responsiveItems = Object.keys(responsive).filter(
-    key => key < viewportWidth);
-  responsiveItems = responsiveItems.map(i => Number(i));
-  const key = responsiveItems.length > 0 ? Math.max(...responsiveItems) : Math.min(...Object.keys(responsive).map(Number));
-  return responsive[key];
-};
+    key => key < viewportWidth)
+  responsiveItems = responsiveItems.map(i => Number(i))
+  const key = responsiveItems.length > 0 ? Math.max(...responsiveItems) : Math.min(...Object.keys(responsive).map(Number))
+  return responsive[key]
+}
 
 /**
  * Debounce function that returns a promise
@@ -21,18 +21,18 @@ const getResponsiveOptions = (responsive) => {
  * @return {Function}
  */
 function debouncePromise(func, delay) {
-  let timeoutId;
+  let timeoutId
 
   return function (...args) {
-    const context = this;
+    const context = this
 
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutId)
     return new Promise((resolve) => {
       timeoutId = setTimeout(() => {
-        resolve(func.apply(context, args));
-      }, delay);
-    });
-  };
+        resolve(func.apply(context, args))
+      }, delay)
+    })
+  }
 }
 
 /**
@@ -44,14 +44,14 @@ function debouncePromise(func, delay) {
  * @return {Boolean}
  */
 const _withinViewport = (element, parent) => {
-  const elementRect = element.getBoundingClientRect();
-  const parentRect = parent.getBoundingClientRect();
+  const elementRect = element.getBoundingClientRect()
+  const parentRect = parent.getBoundingClientRect()
 
   return (
     elementRect.left >= parentRect.left
     && elementRect.left <= parentRect.right
-  );
-};
+  )
+}
 
 /**
  * Returns the slider item at the given index.
@@ -60,13 +60,13 @@ const _withinViewport = (element, parent) => {
  * @return {HTMLElement} - The slider item at the given index.
  */
 const _getSliderItem = (index, elements) => {
-  if (!elements || elements.length === 0) return null;
+  if (!elements || elements.length === 0) return null
   if (typeof (index) === 'string') {
-    index = parseInt(index, 10);
+    index = parseInt(index, 10)
   }
-  if (isNaN(index) || index < 0 || index >= elements.length) return null;
-  return elements[index];
-};
+  if (isNaN(index) || index < 0 || index >= elements.length) return null
+  return elements[index]
+}
 
 /**
    * Calculate the width of an item based on the available space and the number
@@ -78,9 +78,9 @@ const _getSliderItem = (index, elements) => {
    * @return {Number}
    */
 const _getItemSize = function (width, itemsToShow, gap) {
-  const tempWidth = width - (gap * (itemsToShow - 1));
-  return tempWidth / itemsToShow;
-};
+  const tempWidth = width - (gap * (itemsToShow - 1))
+  return tempWidth / itemsToShow
+}
 
 /**
  *
@@ -89,43 +89,43 @@ const _getItemSize = function (width, itemsToShow, gap) {
  */
 function _setElementWidths(elements, itemWidth) {
   elements.forEach((item) => {
-    item.style.flexBasis = itemWidth + 'px';
-  });
+    item.style.flexBasis = itemWidth + 'px'
+  })
 }
 
 const _makePositions = function (elements, elementWidth) {
-  const positions = [];
+  const positions = []
   for (let index = 0; index < elements.length; index++) {
-    positions.push(elementWidth * index);
+    positions.push(elementWidth * index)
   }
-  return positions;
-};
+  return positions
+}
 
 const _scrollToNext = function (container, gutter, positions) {
-  let scrollPosition = container.scrollLeft;
-  scrollPosition = scrollPosition + container.clientWidth - gutter;
+  let scrollPosition = container.scrollLeft
+  scrollPosition = scrollPosition + container.clientWidth - gutter
 
-  const filteredPositions = positions.filter(i => i >= scrollPosition);
+  const filteredPositions = positions.filter(i => i >= scrollPosition)
   if (filteredPositions.length == 0) {
-    return scrollPosition;
+    return scrollPosition
   }
   else {
-    return Math.min(...filteredPositions);
+    return Math.min(...filteredPositions)
   }
-};
+}
 
 const _scrollToPrevious = function (container, gutter, positions) {
-  let scrollPosition = container.scrollLeft;
-  scrollPosition = scrollPosition - container.clientWidth + gutter;
+  let scrollPosition = container.scrollLeft
+  scrollPosition = scrollPosition - container.clientWidth + gutter
 
-  const filteredPositions = positions.filter(i => i <= scrollPosition);
+  const filteredPositions = positions.filter(i => i <= scrollPosition)
   if (filteredPositions.length == 0) {
-    return 0;
+    return 0
   }
   else {
-    return Math.max(...filteredPositions);
+    return Math.max(...filteredPositions)
   }
-};
+}
 
 /**
    * Takes a container element and a set of slider elements (which should all be
@@ -141,26 +141,26 @@ const _scrollToPrevious = function (container, gutter, positions) {
    */
 function _getScrollTo(container, elements, direction, gutter) {
   // let scrollPosition = container.scrollLeft;
-  const elementWidth = elements[0].clientWidth + gutter;
+  const elementWidth = elements[0].clientWidth + gutter
 
-  const positions = _makePositions(elements, elementWidth);
+  const positions = _makePositions(elements, elementWidth)
 
-  let scrollTo = 0;
+  let scrollTo = 0
 
   switch (direction) {
     case 'next':
-      scrollTo = _scrollToNext(container, gutter, positions);
-      break;
+      scrollTo = _scrollToNext(container, gutter, positions)
+      break
 
     case 'previous':
-      scrollTo = _scrollToPrevious(container, gutter, positions);
-      break;
+      scrollTo = _scrollToPrevious(container, gutter, positions)
+      break
 
     default:
-      break;
+      break
   }
 
-  return scrollTo;
+  return scrollTo
 }
 
 /**
@@ -172,16 +172,16 @@ function _getScrollTo(container, elements, direction, gutter) {
  * @param {Object} responsive
  */
 const slide = function (direction, sliderInner, gap) {
-  if (!sliderInner) return;
-  const els = sliderInner.querySelectorAll('.slider-item');
-  if (!els || els.length === 0) return;
+  if (!sliderInner) return
+  const els = sliderInner.querySelectorAll('.slider-item')
+  if (!els || els.length === 0) return
   const scrollPosition = _getScrollTo(
-    sliderInner, els, direction, gap);
+    sliderInner, els, direction, gap)
   sliderInner.scrollTo({
     left: scrollPosition,
     behavior: 'smooth',
-  });
-};
+  })
+}
 
 /**
  *
@@ -194,18 +194,18 @@ const slide = function (direction, sliderInner, gap) {
  */
 function getButtonElement(start, end, els, dataLeft, i) {
   if (end > els.length) {
-    end = els.length;
+    end = els.length
   }
-  end = end - 1;
+  end = end - 1
 
-  const d = document.createElement('button');
-  d.classList.add('slider-pager-item');
-  d.setAttribute('data-page-start', start);
-  d.setAttribute('data-page-end', end);
-  d.setAttribute('data-scrollto', dataLeft);
-  d.type = 'button';
-  d.innerHTML = `<span>${i + 1}</span>`;
-  return d;
+  const d = document.createElement('button')
+  d.classList.add('slider-pager-item')
+  d.setAttribute('data-page-start', start)
+  d.setAttribute('data-page-end', end)
+  d.setAttribute('data-scrollto', dataLeft)
+  d.type = 'button'
+  d.innerHTML = `<span>${i + 1}</span>`
+  return d
 }
 
 /**
@@ -218,16 +218,16 @@ function getButtonElement(start, end, els, dataLeft, i) {
  * @return {Boolean}
  */
 function isActive(item, elements, activeIsSet, slider) {
-  const itemNo = item.getAttribute('data-page-end');
-  const innerItem = _getSliderItem(itemNo, elements);
+  const itemNo = item.getAttribute('data-page-end')
+  const innerItem = _getSliderItem(itemNo, elements)
 
   if (!activeIsSet
     && innerItem
     && _withinViewport(innerItem, slider)) {
-    item.classList.add('active');
-    activeIsSet = true;
+    item.classList.add('active')
+    activeIsSet = true
   }
-  return activeIsSet;
+  return activeIsSet
 }
 
 /**
@@ -244,29 +244,29 @@ function checkButtonState(
   btnClick = false) {
   if (prevButton) {
     if (sliderInner.scrollLeft < 50) {
-      prevButton.setAttribute('disabled', true);
+      prevButton.setAttribute('disabled', true)
       // set focus to the next button
       if (btnClick) {
-        nextButton.focus();
+        nextButton.focus()
       }
     }
     else {
-      prevButton.removeAttribute('disabled');
+      prevButton.removeAttribute('disabled')
     }
   }
 
-  const scrollMax = sliderInner.scrollWidth - sliderInner.clientWidth;
+  const scrollMax = sliderInner.scrollWidth - sliderInner.clientWidth
 
   if (nextButton) {
     if (sliderInner.scrollLeft >= scrollMax - 50) {
-      nextButton.setAttribute('disabled', true);
+      nextButton.setAttribute('disabled', true)
       // set focus to the previous button
       if (btnClick) {
-        prevButton.focus();
+        prevButton.focus()
       }
     }
     else {
-      nextButton.removeAttribute('disabled');
+      nextButton.removeAttribute('disabled')
     }
   }
 }
@@ -279,20 +279,20 @@ function checkButtonState(
  * @return { Object }
  */
 const setItemSize = function (slider) {
-  const containerWidth = slider.sliderInner.clientWidth;
-  const gap = slider.getGap();
+  const containerWidth = slider.sliderInner.clientWidth
+  const gap = slider.getGap()
 
   const itemWidth = _getItemSize(
     containerWidth - slider.getPreview(),
     slider.getItemsToShow(),
-    gap);
+    gap)
 
-  slider.sliderInner.style.gap = '0 ' + gap + 'px';
-  _setElementWidths(slider.elements, itemWidth);
+  slider.sliderInner.style.gap = '0 ' + gap + 'px'
+  _setElementWidths(slider.elements, itemWidth)
 
-  slider.tempTotalWidth = itemWidth * slider.elements.length + gap * (slider.elements.length - 1);
-  return slider;
-};
+  slider.tempTotalWidth = itemWidth * slider.elements.length + gap * (slider.elements.length - 1)
+  return slider
+}
 
 /**
  * Handle the pager click event
@@ -302,42 +302,42 @@ const setItemSize = function (slider) {
  * @param {HTMLElement} sliderInner
  */
 function handlePagerClick(element, slider, sliderInner) {
-  if (!element || !slider || !sliderInner) return;
+  if (!element || !slider || !sliderInner) return
   // Defensive: ensure we have the correct element
-  const pagerItem = element.closest('.slider-pager-item');
-  if (!pagerItem) return;
-  const scrollTo = pagerItem.getAttribute('data-scrollto');
+  const pagerItem = element.closest('.slider-pager-item')
+  if (!pagerItem) return
+  const scrollTo = pagerItem.getAttribute('data-scrollto')
 
   if (scrollTo) {
     // remove active class from all pager items
     slider.querySelectorAll('.slider-pager-item')
       .forEach((item) => {
-        item.classList.remove('active');
-      });
+        item.classList.remove('active')
+      })
 
     // add active class to the clicked pager item
-    pagerItem.classList.add('active');
+    pagerItem.classList.add('active')
 
     // scroll the slider to the value of the pager item
     sliderInner.scrollTo({
       left: scrollTo,
       behavior: 'smooth',
-    });
+    })
   }
 }
 
 const throttle = function (func, limit) {
-  let inThrottle;
+  let inThrottle
   return function () {
-    const args = arguments;
-    const context = this;
+    const args = arguments
+    const context = this
     if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      func.apply(context, args)
+      inThrottle = true
+      setTimeout(() => inThrottle = false, limit)
     }
-  };
-};
+  }
+}
 
 /**
  * Normalise the scroll event across browsers
@@ -347,24 +347,24 @@ const throttle = function (func, limit) {
  * @param  {...any} args
  */
 const onScrollEnd = function (element, func, ...args) {
-  const context = this;
+  const context = this
   if ('onscrollend' in window) {
     element.addEventListener(
       'scrollend', () => {
-        func.apply(context, args);
-      });
+        func.apply(context, args)
+      })
   }
   else {
     // fall back to scroll listener with timeout for browsers
     // that don't support scrollend
     element.addEventListener('scroll', () => {
-      clearTimeout(window.scrollEndTimer);
+      clearTimeout(window.scrollEndTimer)
       window.scrollEndTimer = setTimeout(() => {
-        func.apply(context, args);
-      }, 50);
-    });
+        func.apply(context, args)
+      }, 50)
+    })
   };
-};
+}
 
 export {
   checkButtonState,
@@ -377,4 +377,4 @@ export {
   slide,
   throttle,
   onScrollEnd,
-};
+}

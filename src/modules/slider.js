@@ -1,5 +1,5 @@
 // Dependencies: slider-factory.js, pager-factory.js, utils.js
-import makeSlider from './slider-factory.js';
+import makeSlider from './slider-factory.js'
 
 /**
  * slider is just a wrapper function that initialises the slider
@@ -41,14 +41,14 @@ const slider = function ({
   /**
    * Get a list of all the slider items on the page
    */
-  const sliders = document.querySelectorAll(container);
+  const sliders = document.querySelectorAll(container)
 
   /**
    * Initialise sliders from a NodeList based on the current selector
    */
   sliders.forEach((slider) => {
-    makeSlider(slider, responsive, hiddenClass);
-  });
-};
+    makeSlider(slider, responsive, hiddenClass)
+  })
+}
 
-export default slider;
+export default slider

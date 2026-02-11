@@ -37,7 +37,7 @@ started:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>liteslider</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orcing/liteslider@1.3.1/dist/slider.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foxshack/liteslider@1.3.1/dist/slider.css">
 </head>
 <body>
 
@@ -59,7 +59,7 @@ started:
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/orcing/liteslider@1.3.1/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/foxshack/liteslider@1.3.1/dist/index.js"></script>
   <script>
     slider();
   </script>
@@ -71,7 +71,7 @@ started:
 
 ---
 
-See demo/index.html for more [examples](https://mikeh74.github.io/liteslider/demo/).
+See demo/index.html for more [examples](https://foxshack.github.io/liteslider/demo/).
 
 
 ## Slider CSS
