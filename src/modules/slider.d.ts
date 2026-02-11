@@ -54,22 +54,22 @@ export interface SliderOptions {
 }
 
 /**
- * Slider instance with methods to control the slider
+ * Slider API returned from initialization
  */
-export interface SliderInstance {
+export interface SliderAPI {
   /**
-   * Re-render the pager and recalculate scroll positions.
-   * Call this method after filtering slider elements to update the pager
-   * and button states based on the currently visible elements.
+   * Refresh a specific slider by its ID.
+   * The slider ID can be obtained from the slider element's data-refresh-id attribute.
+   * @param sliderId - The refresh ID of the slider to refresh
    */
-  refresh(): void;
+  refresh(sliderId: string): void;
 }
 
 /**
  * Initialize sliders on the page with the given options
  * @param options - Configuration options for the slider
- * @returns An array of slider instances
+ * @returns An object with a refresh function
  */
-declare function slider(options?: SliderOptions): SliderInstance[];
+declare function slider(options?: SliderOptions): SliderAPI;
 
 export default slider;

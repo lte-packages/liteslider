@@ -33,7 +33,7 @@
   "homepage": "https://github.com/foxshack/liteslider#readme",
   "devDependencies": {
     "@eslint/js": "^9.20.0",
-    "@parcel/transformer-sass": "^2.13.3",
+    "@parcel/transformer-sass": "^2.16.4",
     "@stylistic/eslint-plugin": "^3.1.0",
     "eslint": "^9.20.0",
     "globals": "^15.14.0",

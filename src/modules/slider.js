@@ -10,7 +10,7 @@ import makeSlider from './slider-factory.js'
  * the default options to customise the slider as required.
  *
  * @param {Object} Options object
- * @returns {Array} Array of slider instances
+ * @returns {Object} Object with refresh function
  */
 const slider = function ({
   container = '.slider',
@@ -44,16 +44,43 @@ const slider = function ({
   const sliders = document.querySelectorAll(container)
 
   /**
-   * Initialise sliders from a NodeList based on the current selector
-   * and return an array of slider instances
+   * Map to store slider instances by their refresh ID
    */
-  const instances = []
+  const instancesMap = new Map()
+  let refreshIdCounter = 0
+
+  /**
+   * Initialise sliders from a NodeList based on the current selector
+   */
   sliders.forEach((sliderEl) => {
+    // Generate unique refresh ID
+    const refreshId = `slider-${refreshIdCounter++}`
+    
+    // Set the refresh ID as a data attribute
+    sliderEl.setAttribute('data-refresh-id', refreshId)
+    
+    // Create slider instance
     const instance = makeSlider(sliderEl, responsive, hiddenClass)
-    instances.push(instance)
+    
+    // Store instance by refresh ID
+    instancesMap.set(refreshId, instance)
   })
 
-  return instances
+  /**
+   * Refresh function that can be called with a slider ID
+   * @param {string} sliderId - The refresh ID of the slider to refresh
+   */
+  const refresh = function (sliderId) {
+    const instance = instancesMap.get(sliderId)
+    if (instance && typeof instance.refresh === 'function') {
+      instance.refresh()
+    }
+    else {
+      console.warn(`Slider with ID "${sliderId}" not found or does not support refresh.`)
+    }
+  }
+
+  return { refresh }
 }
 
 export default slider

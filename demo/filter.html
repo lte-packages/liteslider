@@ -167,18 +167,21 @@
     <h2>How it works</h2>
     <p>When you click a filter button, the code:</p>
     <ol>
+      <li>Gets the slider's refresh ID from its <code>data-refresh-id</code> attribute</li>
       <li>Hides/shows slider items based on their <code>data-category</code> attribute</li>
-      <li>Calls the <code>refresh()</code> method on the slider instance</li>
-      <li>The slider re-queries visible items, recalculates positions, and updates the pager</li>
+      <li>Calls <code>refresh(sliderId)</code> to update the pager and positions</li>
     </ol>
 
     <h2>Code Example</h2>
-    <pre><code>// Initialize the slider and get the instance
-const sliders = slider();
+    <pre><code>// Initialize the slider and get the API
+const sliderAPI = slider();
 
 // Filter items and refresh
 function filterSlider(category) {
-  const items = document.querySelectorAll('.slider-item');
+  const sliderElement = document.querySelector('.slider');
+  const sliderId = sliderElement.getAttribute('data-refresh-id');
+  const items = sliderElement.querySelectorAll('.slider-item');
+  
   items.forEach(item => {
     if (category === 'all' || item.dataset.category === category) {
       item.classList.remove('hidden');
@@ -188,7 +191,7 @@ function filterSlider(category) {
   });
   
   // Call refresh to update the pager and scroll positions
-  sliders[0].refresh();
+  sliderAPI.refresh(sliderId);
 }</code></pre>
 
   </div>
@@ -196,15 +199,17 @@ function filterSlider(category) {
   <script src="../dist/index.js"></script>
 
   <script>
-    // Initialize the slider and store the instances
-    const sliders = slider();
+    // Initialize the slider and store the API
+    const sliderAPI = slider();
 
     // Get filter buttons
     const filterButtons = document.querySelectorAll('.filter-btn');
 
     // Function to filter slider items
     function filterSlider(category) {
-      const items = document.querySelectorAll('.slider-item');
+      const sliderElement = document.querySelector('.slider');
+      const sliderId = sliderElement.getAttribute('data-refresh-id');
+      const items = sliderElement.querySelectorAll('.slider-item');
       
       items.forEach(item => {
         if (category === 'all' || item.dataset.category === category) {
@@ -214,8 +219,8 @@ function filterSlider(category) {
         }
       });
       
-      // Call refresh to re-render pager and recalculate positions
-      sliders[0].refresh();
+      // Call refresh with the slider ID to re-render pager and recalculate positions
+      sliderAPI.refresh(sliderId);
     }
 
     // Add click handlers to filter buttons

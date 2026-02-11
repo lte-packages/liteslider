@@ -128,7 +128,7 @@ Tested on:
 
 ### `slider(options)`
 
-Initializes all sliders on the page and returns an array of slider instances.
+Initializes all sliders on the page and returns an object with a `refresh` function.
 
 **Parameters:**
 - `options` (Object, optional): Configuration options
@@ -136,11 +136,11 @@ Initializes all sliders on the page and returns an array of slider instances.
   - `responsive` (Object): Responsive breakpoint configuration
   - `hiddenClass` (string): CSS class to hide elements (default: `'hidden'`)
 
-**Returns:** Array of slider instances
+**Returns:** Object with `refresh(sliderId)` function
 
 **Example:**
 ```javascript
-const sliders = slider({
+const sliderAPI = slider({
   container: '.my-slider',
   responsive: {
     0: { items: 2, gutter: 16 },
@@ -149,13 +149,20 @@ const sliders = slider({
 });
 ```
 
-### `sliderInstance.refresh()`
+### `refresh(sliderId)`
 
-Re-renders the pager and recalculates scroll positions. Call this method after filtering or modifying slider elements to update the pager and button states.
+Re-renders the pager and recalculates scroll positions for a specific slider. Call this method after filtering or modifying slider elements to update the pager and button states.
+
+**Parameters:**
+- `sliderId` (string): The refresh ID of the slider (from `data-refresh-id` attribute)
 
 **Example:**
 ```javascript
-const sliders = slider();
+const sliderAPI = slider();
+
+// Get the slider element and its refresh ID
+const sliderElement = document.querySelector('.slider');
+const sliderId = sliderElement.getAttribute('data-refresh-id');
 
 // Filter items
 document.querySelectorAll('.slider-item').forEach(item => {
@@ -167,7 +174,7 @@ document.querySelectorAll('.slider-item').forEach(item => {
 });
 
 // Refresh the slider to update pager and positions
-sliders[0].refresh();
+sliderAPI.refresh(sliderId);
 ```
 
 See the [filter demo](demo/filter.html) for a complete example.
