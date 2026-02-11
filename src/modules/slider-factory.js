@@ -247,6 +247,26 @@ slider.checkPager = function () {
   }
 }
 
+slider.refresh = function () {
+  // Re-query slider items to pick up any filtered elements
+  this.elements = this.sliderInner.querySelectorAll('.slider-item')
+
+  // Recalculate and update item sizes
+  setItemSize(this)
+
+  // Update button visibility
+  this.showHideButtons()
+
+  // Check button states
+  this.checkButtons()
+
+  // Re-render pager and check state if pager exists
+  if (this.pager) {
+    this.pager.render()
+    this.checkPager()
+  }
+}
+
 const makeSlider = function (sliderElement, responsive, hiddenClass) {
   const obj = Object.create(slider)
   obj.init(sliderElement, responsive, hiddenClass)

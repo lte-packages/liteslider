@@ -54,9 +54,22 @@ export interface SliderOptions {
 }
 
 /**
+ * Slider instance with methods to control the slider
+ */
+export interface SliderInstance {
+  /**
+   * Re-render the pager and recalculate scroll positions.
+   * Call this method after filtering slider elements to update the pager
+   * and button states based on the currently visible elements.
+   */
+  refresh(): void;
+}
+
+/**
  * Initialize sliders on the page with the given options
  * @param options - Configuration options for the slider
+ * @returns An array of slider instances
  */
-declare function slider(options?: SliderOptions): void;
+declare function slider(options?: SliderOptions): SliderInstance[];
 
 export default slider;

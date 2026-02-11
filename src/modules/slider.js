@@ -45,10 +45,15 @@ const slider = function ({
 
   /**
    * Initialise sliders from a NodeList based on the current selector
+   * and return an array of slider instances
    */
-  sliders.forEach((slider) => {
-    makeSlider(slider, responsive, hiddenClass)
+  const instances = []
+  sliders.forEach((sliderEl) => {
+    const instance = makeSlider(sliderEl, responsive, hiddenClass)
+    instances.push(instance)
   })
+
+  return instances
 }
 
 export default slider

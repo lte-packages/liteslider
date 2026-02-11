@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter Demo - Lite Slider</title>
+
+  <style>
+    /* Minimal CSS Reset */
+    html {
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    body,
+    ol,
+    ul {
+      margin: 0;
+      padding: 0;
+      font-weight: normal;
+    }
+
+    ol,
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Demo CSS */
+
+    body {
+      overflow-x: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .container {
+      max-width: 1000px;
+      padding: 1rem;
+      margin: auto;
+    }
+
+    .demo-box {
+      padding: 1.5rem;
+      background-color: hsl(182, 25%, 70%);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .filter-buttons {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-buttons button {
+      padding: 0.5rem 1rem;
+      background-color: hsl(182, 50%, 50%);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .filter-buttons button:hover {
+      background-color: hsl(182, 50%, 40%);
+    }
+
+    .filter-buttons button.active {
+      background-color: hsl(182, 80%, 30%);
+    }
+
+    .slider-item.hidden {
+      display: none;
+    }
+
+    /* Category colors */
+    .category-a {
+      background-color: hsl(182, 50%, 60%);
+    }
+
+    .category-b {
+      background-color: hsl(220, 50%, 60%);
+    }
+
+    .category-c {
+      background-color: hsl(280, 50%, 60%);
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="../dist/slider.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>Lite Slider - Filter Demo</h1>
+
+    <p>This demo shows how to use the <code>refresh()</code> method to update the slider
+      after filtering elements.</p>
+
+    <h2>Filterable Slider with Pager</h2>
+
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">Show All</button>
+      <button class="filter-btn" data-filter="a">Category A</button>
+      <button class="filter-btn" data-filter="b">Category B</button>
+      <button class="filter-btn" data-filter="c">Category C</button>
+    </div>
+
+    <div class="slider">
+      <div class="slider-button-flex">
+        <div class="slider-nav hidden">
+          <button type="button" class="slider-button slider-prev">
+            <span class="hidden">Previous</span>
+            <svg class="slider-button-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <path class="slider-button-svg-path" d="M 67 0 L 17 50 L 67 100 L 83 84 L 49 50 L 83 16 L 67 0 Z" />
+            </svg>
+          </button>
+          <button type="button" class="slider-button slider-next">
+            <span class="hidden">Next</span>
+            <svg class="slider-button-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <path class="slider-button-svg-path" d="M 33 0 L 83 50 L 33 100 L 17 84 L 51 50 L 17 16 L 33 0 Z" />
+            </svg>
+          </button>
+        </div>
+        <div class="slider-inner" tabindex="0">
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-1</div></div>
+          <div class="slider-item" data-category="b"><div class="demo-box category-b">B-1</div></div>
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-2</div></div>
+          <div class="slider-item" data-category="c"><div class="demo-box category-c">C-1</div></div>
+          <div class="slider-item" data-category="b"><div class="demo-box category-b">B-2</div></div>
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-3</div></div>
+          <div class="slider-item" data-category="c"><div class="demo-box category-c">C-2</div></div>
+          <div class="slider-item" data-category="b"><div class="demo-box category-b">B-3</div></div>
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-4</div></div>
+          <div class="slider-item" data-category="c"><div class="demo-box category-c">C-3</div></div>
+          <div class="slider-item" data-category="b"><div class="demo-box category-b">B-4</div></div>
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-5</div></div>
+          <div class="slider-item" data-category="c"><div class="demo-box category-c">C-4</div></div>
+          <div class="slider-item" data-category="b"><div class="demo-box category-b">B-5</div></div>
+          <div class="slider-item" data-category="a"><div class="demo-box category-a">A-6</div></div>
+        </div>
+      </div>
+      <div class="slider-pager hidden"></div>
+    </div>
+
+    <h2>How it works</h2>
+    <p>When you click a filter button, the code:</p>
+    <ol>
+      <li>Hides/shows slider items based on their <code>data-category</code> attribute</li>
+      <li>Calls the <code>refresh()</code> method on the slider instance</li>
+      <li>The slider re-queries visible items, recalculates positions, and updates the pager</li>
+    </ol>
+
+    <h2>Code Example</h2>
+    <pre><code>// Initialize the slider and get the instance
+const sliders = slider();
+
+// Filter items and refresh
+function filterSlider(category) {
+  const items = document.querySelectorAll('.slider-item');
+  items.forEach(item => {
+    if (category === 'all' || item.dataset.category === category) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+  
+  // Call refresh to update the pager and scroll positions
+  sliders[0].refresh();
+}</code></pre>
+
+  </div>
+
+  <script src="../dist/index.js"></script>
+
+  <script>
+    // Initialize the slider and store the instances
+    const sliders = slider();
+
+    // Get filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    // Function to filter slider items
+    function filterSlider(category) {
+      const items = document.querySelectorAll('.slider-item');
+      
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+      
+      // Call refresh to re-render pager and recalculate positions
+      sliders[0].refresh();
+    }
+
+    // Add click handlers to filter buttons
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Update active button state
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Filter the slider
+        const category = this.dataset.filter;
+        filterSlider(category);
+      });
+    });
+  </script>
+</body>
+
+</html>

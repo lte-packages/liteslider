@@ -126,9 +126,51 @@ Tested on:
 
 ## API Reference
 
-`slider()`
+### `slider(options)`
 
-Initializes all sliders on the page. No arguments required.
+Initializes all sliders on the page and returns an array of slider instances.
+
+**Parameters:**
+- `options` (Object, optional): Configuration options
+  - `container` (string): CSS selector for slider containers (default: `'.slider'`)
+  - `responsive` (Object): Responsive breakpoint configuration
+  - `hiddenClass` (string): CSS class to hide elements (default: `'hidden'`)
+
+**Returns:** Array of slider instances
+
+**Example:**
+```javascript
+const sliders = slider({
+  container: '.my-slider',
+  responsive: {
+    0: { items: 2, gutter: 16 },
+    768: { items: 4, gutter: 16 }
+  }
+});
+```
+
+### `sliderInstance.refresh()`
+
+Re-renders the pager and recalculates scroll positions. Call this method after filtering or modifying slider elements to update the pager and button states.
+
+**Example:**
+```javascript
+const sliders = slider();
+
+// Filter items
+document.querySelectorAll('.slider-item').forEach(item => {
+  if (shouldShowItem(item)) {
+    item.classList.remove('hidden');
+  } else {
+    item.classList.add('hidden');
+  }
+});
+
+// Refresh the slider to update pager and positions
+sliders[0].refresh();
+```
+
+See the [filter demo](demo/filter.html) for a complete example.
 
 ---
 
