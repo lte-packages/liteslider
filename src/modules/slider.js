@@ -10,7 +10,7 @@ import makeSlider from './slider-factory.js'
  * the default options to customise the slider as required.
  *
  * @param {Object} Options object
- * @returns {void}
+ * @returns {Array} Array of slider instances
  */
 const slider = function ({
   container = '.slider',
