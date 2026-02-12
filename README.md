@@ -128,7 +128,7 @@ Tested on:
 
 ### `slider(options)`
 
-Initializes all sliders on the page and returns an object with a `refresh` function.
+Initializes all sliders on the page.
 
 **Parameters:**
 - `options` (Object, optional): Configuration options
@@ -136,11 +136,9 @@ Initializes all sliders on the page and returns an object with a `refresh` funct
   - `responsive` (Object): Responsive breakpoint configuration
   - `hiddenClass` (string): CSS class to hide elements (default: `'hidden'`)
 
-**Returns:** Object with `refresh(sliderId)` function
-
 **Example:**
 ```javascript
-const sliderAPI = slider({
+slider({
   container: '.my-slider',
   responsive: {
     0: { items: 2, gutter: 16 },
@@ -149,23 +147,20 @@ const sliderAPI = slider({
 });
 ```
 
-### `refresh(sliderId)`
+### `sliderElement.refresh()`
 
-Re-renders the pager and recalculates scroll positions for a specific slider. Call this method after filtering or modifying slider elements to update the pager and button states.
-
-**Parameters:**
-- `sliderId` (string): The refresh ID of the slider (from `data-refresh-id` attribute)
+Each initialized slider element has a `refresh()` method that re-renders the pager and recalculates scroll positions. Call this method after filtering or modifying slider elements to update the pager and button states.
 
 **Example:**
 ```javascript
-const sliderAPI = slider();
+// Initialize sliders
+slider();
 
-// Get the slider element and its refresh ID
+// Get the slider element
 const sliderElement = document.querySelector('.slider');
-const sliderId = sliderElement.getAttribute('data-refresh-id');
 
 // Filter items
-document.querySelectorAll('.slider-item').forEach(item => {
+sliderElement.querySelectorAll('.slider-item').forEach(item => {
   if (shouldShowItem(item)) {
     item.classList.remove('hidden');
   } else {
@@ -174,7 +169,7 @@ document.querySelectorAll('.slider-item').forEach(item => {
 });
 
 // Refresh the slider to update pager and positions
-sliderAPI.refresh(sliderId);
+sliderElement.refresh();
 ```
 
 See the [filter demo](demo/filter.html) for a complete example.

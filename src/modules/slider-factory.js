@@ -59,7 +59,6 @@ slider.init = function (
   // reference the responsive object
   this.responsive = responsive
   this.slider = sliderEl
-  this.id = this.slider.id || null
   this.sliderInner = this.slider.querySelector('.slider-inner')
   this.isSliding = false
   this.isBtnClick = false
