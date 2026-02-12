@@ -54,9 +54,22 @@ export interface SliderOptions {
 }
 
 /**
+ * Slider API returned from initialization
+ */
+export interface SliderAPI {
+  /**
+   * Refresh a specific slider by its ID.
+   * The slider ID can be obtained from the slider element's data-refresh-id attribute.
+   * @param sliderId - The refresh ID of the slider to refresh
+   */
+  refresh(sliderId: string): void;
+}
+
+/**
  * Initialize sliders on the page with the given options
  * @param options - Configuration options for the slider
+ * @returns An object with a refresh function
  */
-declare function slider(options?: SliderOptions): void;
+declare function slider(options?: SliderOptions): SliderAPI;
 
 export default slider;

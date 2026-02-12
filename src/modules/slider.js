@@ -46,8 +46,8 @@ const slider = function ({
   /**
    * Initialise sliders from a NodeList based on the current selector
    */
-  sliders.forEach((slider) => {
-    makeSlider(slider, responsive, hiddenClass)
+  sliders.forEach((sliderEl) => {
+    makeSlider(sliderEl, responsive, hiddenClass)
   })
 }
 

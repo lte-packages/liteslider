@@ -63,6 +63,8 @@ slider.init = function (
   this.isSliding = false
   this.isBtnClick = false
 
+  this.slider.refresh = this.refresh.bind(this)
+
   // Defensive check for sliderInner
   if (!this.sliderInner) {
     console.warn('Slider inner element not found.')
@@ -244,6 +246,50 @@ slider.checkPager = function () {
     })
 
     this.pager.setActivePagerItem()
+  }
+}
+
+/**
+ * Refresh the slider after filtering or modifying slider items.
+ * Re-queries visible slider items, recalculates positions, updates button
+ * states, and re-renders the pager.
+ *
+ * @example
+ * // Filter items and refresh
+ * document.querySelectorAll('.slider-item').forEach(item => {
+ *   if (shouldShow(item)) {
+ *     item.classList.remove('hidden');
+ *   } else {
+ *     item.classList.add('hidden');
+ *   }
+ * });
+ * sliderInstance.refresh();
+ */
+slider.refresh = function () {
+  // Re-query slider items to pick up any filtered elements
+  // Only include items that are not hidden (have display !== 'none')
+  const allItems = this.sliderInner.querySelectorAll('.slider-item')
+  const visibleItems = Array.from(allItems).filter((item) => {
+    const style = window.getComputedStyle(item)
+    return style.display !== 'none'
+  })
+
+  // Update the elements NodeList to only include visible items
+  this.elements = visibleItems
+
+  // Recalculate and update item sizes
+  setItemSize(this)
+
+  // Update button visibility
+  this.showHideButtons()
+
+  // Check button states
+  this.checkButtons()
+
+  // Re-render pager and check state if pager exists
+  if (this.pager) {
+    this.pager.render()
+    this.checkPager()
   }
 }
 
