@@ -179,9 +179,8 @@ const sliderAPI = slider();
 // Filter items and refresh
 function filterSlider(category) {
   const sliderElement = document.querySelector('.slider');
-  const sliderId = sliderElement.getAttribute('data-refresh-id');
   const items = sliderElement.querySelectorAll('.slider-item');
-  
+
   items.forEach(item => {
     if (category === 'all' || item.dataset.category === category) {
       item.classList.remove('hidden');
@@ -189,7 +188,6 @@ function filterSlider(category) {
       item.classList.add('hidden');
     }
   });
-  
   // Call refresh to update the pager and scroll positions
   sliderAPI.refresh(sliderId);
 }</code></pre>
@@ -208,9 +206,8 @@ function filterSlider(category) {
     // Function to filter slider items
     function filterSlider(category) {
       const sliderElement = document.querySelector('.slider');
-      const sliderId = sliderElement.getAttribute('data-refresh-id');
       const items = sliderElement.querySelectorAll('.slider-item');
-      
+
       items.forEach(item => {
         if (category === 'all' || item.dataset.category === category) {
           item.classList.remove('hidden');
@@ -218,9 +215,8 @@ function filterSlider(category) {
           item.classList.add('hidden');
         }
       });
-      
-      // Call refresh with the slider ID to re-render pager and recalculate positions
-      sliderAPI.refresh(sliderId);
+
+      sliderElement.refresh()
     }
 
     // Add click handlers to filter buttons

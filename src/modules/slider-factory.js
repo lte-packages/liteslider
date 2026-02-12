@@ -59,9 +59,12 @@ slider.init = function (
   // reference the responsive object
   this.responsive = responsive
   this.slider = sliderEl
+  this.id = this.slider.id || null
   this.sliderInner = this.slider.querySelector('.slider-inner')
   this.isSliding = false
   this.isBtnClick = false
+
+  this.slider.refresh = this.refresh.bind(this)
 
   // Defensive check for sliderInner
   if (!this.sliderInner) {
@@ -267,11 +270,11 @@ slider.refresh = function () {
   // Re-query slider items to pick up any filtered elements
   // Only include items that are not hidden (have display !== 'none')
   const allItems = this.sliderInner.querySelectorAll('.slider-item')
-  const visibleItems = Array.from(allItems).filter(item => {
+  const visibleItems = Array.from(allItems).filter((item) => {
     const style = window.getComputedStyle(item)
     return style.display !== 'none'
   })
-  
+
   // Update the elements NodeList to only include visible items
   this.elements = visibleItems
 
