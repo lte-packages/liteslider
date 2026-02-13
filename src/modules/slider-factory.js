@@ -63,8 +63,6 @@ slider.init = function (
   this.isSliding = false
   this.isBtnClick = false
 
-  this.slider.refresh = this.refresh.bind(this)
-
   // Defensive check for sliderInner
   if (!this.sliderInner) {
     console.warn('Slider inner element not found.')
@@ -86,6 +84,13 @@ slider.init = function (
   }
 
   this.addListeners()
+
+  // Listen for refresh events dispatched from window (pub/sub pattern)
+  window.addEventListener('sliderRefresh', (e) => {
+    if (e.detail && e.detail.sliderElement === this.slider) {
+      this.refresh()
+    }
+  })
 }
 
 slider.moveToPrevious = function () {

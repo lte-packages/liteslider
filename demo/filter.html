@@ -127,7 +127,7 @@
       <button class="filter-btn" data-filter="c">Category C</button>
     </div>
 
-    <div class="slider">
+    <div class="slider" id="main-slider">
       <div class="slider-button-flex">
         <div class="slider-nav hidden">
           <button type="button" class="slider-button slider-prev">
@@ -216,7 +216,8 @@ function filterSlider(category) {
         }
       });
 
-      sliderElement.refresh()
+      // Call refresh to update the pager and scroll positions
+      window.sliderRefresh(sliderElement);
     }
 
     // Add click handlers to filter buttons

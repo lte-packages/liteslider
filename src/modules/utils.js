@@ -366,6 +366,14 @@ const onScrollEnd = function (element, func, ...args) {
   };
 }
 
+// Function to refresh the sliders on the page
+const sliderRefresh = function (sliderElement) {
+  const event = new CustomEvent('sliderRefresh', {
+    detail: { sliderElement },
+  })
+  window.dispatchEvent(event)
+}
+
 export {
   checkButtonState,
   debouncePromise,
@@ -377,4 +385,5 @@ export {
   slide,
   throttle,
   onScrollEnd,
+  sliderRefresh,
 }
