@@ -20,73 +20,73 @@ import {
   getButtonElement,
   handlePagerClick,
   isActive,
-} from './utils.js';
+} from './utils.js'
 
-const pager = {};
+const pager = {}
 
 pager.init = function (slider) {
-  this.slider = slider;
-  this.render();
-  this.addEventListeners();
-};
+  this.slider = slider
+  this.render()
+  this.addEventListeners()
+}
 
 pager.getPageCount = function () {
   return Math.ceil(
-    this.slider.elements.length / this.slider.getItemsToShow());
-};
+    this.slider.elements.length / this.slider.getItemsToShow())
+}
 
 pager.render = function () {
-  this.slider.pagerEl.innerHTML = '';
-  const itemsToShow = this.slider.getItemsToShow();
+  this.slider.pagerEl.innerHTML = ''
+  const itemsToShow = this.slider.getItemsToShow()
 
-  if (itemsToShow === 1) return;
+  if (itemsToShow === 1) return
 
-  const elementArray = Array.from(this.slider.elements);
-  const pages = this.getPageCount();
+  const elementArray = Array.from(this.slider.elements)
+  const pages = this.getPageCount()
 
   for (let i = 0; i < pages; i++) {
-    const start = i * itemsToShow;
-    const end = start + itemsToShow;
-    const sub = elementArray.slice(start, end);
+    const start = i * itemsToShow
+    const end = start + itemsToShow
+    const sub = elementArray.slice(start, end)
 
-    const dataLeft = sub[0].offsetLeft;
+    const dataLeft = sub[0].offsetLeft
 
     const d = getButtonElement(
       start, end,
       this.slider.elements,
-      dataLeft, i);
-    this.slider.pagerEl.appendChild(d);
+      dataLeft, i)
+    this.slider.pagerEl.appendChild(d)
   }
-};
+}
 
 pager.addEventListeners = function () {
-  const slider = this.slider;
+  const slider = this.slider
 
   this.slider.pagerEl.addEventListener('click', (e) => {
-    const el = e.target;
+    const el = e.target
 
     handlePagerClick(
-      el, slider.slider, slider.sliderInner);
-  });
-};
+      el, slider.slider, slider.sliderInner)
+  })
+}
 
 pager.setActivePagerItem = function () {
-  const slider = this.slider;
-  let items = slider.slider.querySelectorAll('.slider-pager-item');
+  const slider = this.slider
+  let items = slider.slider.querySelectorAll('.slider-pager-item')
 
   // convert to array and reverse so that we run backwards from the last
   // page - easiest way to fix the last page bug
-  items = Array.from(items);
-  items.reverse();
-  let activeIsSet = false;
+  items = Array.from(items)
+  items.reverse()
+  let activeIsSet = false
   items.forEach((item) => {
     activeIsSet = isActive(
       item,
       slider.elements,
       activeIsSet,
-      slider.slider);
-  });
-};
+      slider.slider)
+  })
+}
 
 /**
  * Creates a pager object with the given slider.
@@ -94,9 +94,9 @@ pager.setActivePagerItem = function () {
  * @return {Pager} - The pager object.
  */
 const makePager = function (slider) {
-  const obj = Object.create(pager);
-  obj.init(slider);
-  return obj;
-};
+  const obj = Object.create(pager)
+  obj.init(slider)
+  return obj
+}
 
-export default makePager;
+export default makePager

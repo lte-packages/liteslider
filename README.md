@@ -53,7 +53,7 @@ started:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>liteslider</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lte-packages/liteslider@1.3.2/dist/slider.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/foxshack/liteslider@1.3.1/dist/slider.css">
 </head>
 <body>
 
@@ -75,7 +75,7 @@ started:
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/lte-packages/liteslider@1.3.2/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/foxshack/liteslider@1.3.1/dist/index.js"></script>
   <script>
     slider();
   </script>
@@ -83,6 +83,11 @@ started:
 </html>
 
 ```
+
+---
+
+See demo/index.html for more [examples](https://foxshack.github.io/liteslider/demo/).
+
 
 ## Slider CSS
 
@@ -241,37 +246,53 @@ Tested on:
 
 ## API Reference
 
-### `slider([options])`
+### `slider(options)`
 
-Initializes slider(s) on the page.
+Initializes all sliders on the page.
 
 **Parameters:**
+- `options` (Object, optional): Configuration options
+  - `container` (string): CSS selector for slider containers (default: `'.slider'`)
+  - `responsive` (Object): Responsive breakpoint configuration
+  - `hiddenClass` (string): CSS class to hide elements (default: `'hidden'`)
 
-- `options` (object, optional) - Configuration object. When called without 
-  arguments, uses default settings and initializes all `.slider` elements.
-  - `container` (string) - CSS selector for slider element(s). Default: `.slider`
-  - `responsive` (object) - Responsive breakpoint configuration. See [Options](#options) 
-    section for details.
-  - `hiddenClass` (string) - CSS class for hiding elements. Default: `hidden`
-
-**Returns:** `void`
-
-**Examples:**
-
+**Example:**
 ```javascript
-// Initialize with defaults
-slider();
-
-// Initialize with custom options
 slider({
   container: '.my-slider',
   responsive: {
-    0: { items: 1, gutter: 0 },
-    768: { items: 3, gutter: 20 }
-  },
-  hiddenClass: 'd-none'
+    0: { items: 2, gutter: 16 },
+    768: { items: 4, gutter: 16 }
+  }
 });
 ```
+
+### `sliderElement.refresh()`
+
+Each initialized slider element has a `refresh()` method that re-renders the pager and recalculates scroll positions. Call this method after filtering or modifying slider elements to update the pager and button states.
+
+**Example:**
+```javascript
+// Initialize sliders
+slider();
+
+// Get the slider element
+const sliderElement = document.querySelector('.slider');
+
+// Filter items
+sliderElement.querySelectorAll('.slider-item').forEach(item => {
+  if (shouldShowItem(item)) {
+    item.classList.remove('hidden');
+  } else {
+    item.classList.add('hidden');
+  }
+});
+
+// Refresh the slider to update pager and positions
+sliderElement.refresh();
+```
+
+See the [filter demo](demo/filter.html) for a complete example.
 
 ---
 

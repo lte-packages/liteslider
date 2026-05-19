@@ -3,8 +3,8 @@
 }
 
 .slider {
-  overscroll-behavior-x: contain;
-  
+  overscroll-behavior: contain;
+
   &-inner {
     will-change: scroll-position;
     display: flex;
