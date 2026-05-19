@@ -24,6 +24,22 @@ library like [Slick slider](https://kenwheeler.github.io/slick/) or
 
 ## Quick Start
 
+```shell
+npm install --save-dev github:lte-packages/liteslider#1.3.2
+```
+
+If you are using a bundler like webpack or parcel you can then include in your
+main JS file as follows:
+
+```js
+import slider from 'liteslider';
+
+// run this to initialise it (see options below)
+slider();
+```
+
+Alternatively you can use a CDN to include it.
+
 You can clone or download the repo and copy the files into your project
 or you can use [jsdelivr](https://www.jsdelivr.com) to access them. The example
 provided here is using jsdelivr as this is the quickest and easiest way to get
@@ -37,7 +53,7 @@ started:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>liteslider</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orcing/liteslider@1.3.1/dist/slider.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lte-packages/liteslider@1.3.2/dist/slider.css">
 </head>
 <body>
 
@@ -59,20 +75,14 @@ started:
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/gh/orcing/liteslider@1.3.1/dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/lte-packages/liteslider@1.3.2/dist/index.js"></script>
   <script>
     slider();
   </script>
-
 </body>
 </html>
 
 ```
-
----
-
-See demo/index.html for more [examples](https://mikeh74.github.io/liteslider/demo/).
-
 
 ## Slider CSS
 
@@ -99,8 +109,113 @@ be initialized.
 
 ### Options
 
-Currently, there are no configuration options. The slider is designed to be as 
-simple as possible.
+The `slider()` function accepts an options object with the following properties:
+
+#### `container` (string)
+
+CSS selector for the slider element(s) to initialize.
+
+- **Type:** `string`
+- **Default:** `.slider`
+
+**Example:**
+```javascript
+slider({
+  container: '.my-custom-slider'
+});
+```
+
+#### `responsive` (object)
+
+An object defining responsive breakpoints and their settings. Each key is a 
+viewport width in pixels, and the value is an object with slider settings 
+for that breakpoint and above.
+
+- **Type:** `object`
+- **Default:**
+  ```javascript
+  {
+    0: { items: 2, gutter: 16 },
+    576: { items: 3, gutter: 16 },
+    768: { items: 4, gutter: 16 },
+    992: { items: 5, gutter: 16 },
+    1200: { items: 6, gutter: 16 }
+  }
+  ```
+
+##### Responsive Options
+
+Each breakpoint object can have the following properties:
+
+**`items`** (number) - Number of items to display at once.
+
+**`gutter`** (number) - Gap between items in pixels.
+
+**`preview`** (number, optional) - Amount of pixels to subtract from the 
+container width, allowing the next/previous items to peek into view.
+
+**Example:**
+```javascript
+slider({
+  responsive: {
+    0: {
+      items: 1,
+      gutter: 0
+    },
+    576: {
+      items: 2,
+      gutter: 16,
+      preview: 40  // Show 40px of next item
+    },
+    992: {
+      items: 3,
+      gutter: 20
+    }
+  }
+});
+```
+
+#### `hiddenClass` (string)
+
+CSS class name used to hide navigation buttons and pager when not needed.
+
+- **Type:** `string`
+- **Default:** `hidden`
+
+**Example:**
+```javascript
+slider({
+  hiddenClass: 'd-none'
+});
+```
+
+### Complete Example
+
+```javascript
+slider({
+  container: '.product-slider',
+  responsive: {
+    0: {
+      items: 1,
+      gutter: 0
+    },
+    576: {
+      items: 2,
+      gutter: 16
+    },
+    768: {
+      items: 3,
+      gutter: 20,
+      preview: 30
+    },
+    1024: {
+      items: 4,
+      gutter: 24
+    }
+  },
+  hiddenClass: 'd-none'
+});
+```
 
 ---
 
@@ -126,9 +241,37 @@ Tested on:
 
 ## API Reference
 
-`slider()`
+### `slider([options])`
 
-Initializes all sliders on the page. No arguments required.
+Initializes slider(s) on the page.
+
+**Parameters:**
+
+- `options` (object, optional) - Configuration object. When called without 
+  arguments, uses default settings and initializes all `.slider` elements.
+  - `container` (string) - CSS selector for slider element(s). Default: `.slider`
+  - `responsive` (object) - Responsive breakpoint configuration. See [Options](#options) 
+    section for details.
+  - `hiddenClass` (string) - CSS class for hiding elements. Default: `hidden`
+
+**Returns:** `void`
+
+**Examples:**
+
+```javascript
+// Initialize with defaults
+slider();
+
+// Initialize with custom options
+slider({
+  container: '.my-slider',
+  responsive: {
+    0: { items: 1, gutter: 0 },
+    768: { items: 3, gutter: 20 }
+  },
+  hiddenClass: 'd-none'
+});
+```
 
 ---
 
